@@ -18,4 +18,8 @@ class minecraft {
     source => 'puppet:///module/minecraft/minecraft.service',
   }
   # Note: "puppet:///", then defaults to the master. "puppet://<alternate file share>/" can be specified, but rarely done.
+  service {'minecraft':
+    ensure => running,
+    ensure => true,
+  }
 }
