@@ -18,7 +18,8 @@ class minecraft {
   }
   file {'/etc/systemd/system/minecraft.service':
     ensure => file,
-    source => 'puppet:///module/minecraft/minecraft.service',
+    content => epp('minecraft/minecraft.service')
+    #source => 'puppet:///module/minecraft/minecraft.service',
   }
   # Note: "puppet:///", then defaults to the master. "puppet://<alternate file share>/" can be specified, but rarely done.
   service {'minecraft':
