@@ -1,16 +1,18 @@
 class minecraft {
-  file {'/opt/minecraft'
+  $url='https://s3.amazonaws.com/Mincraft.Download/versions/1.12.2/minecraft_server.1.12.2.jar'
+  $install = '/opt/minecraft'
+  file {$install
     ensure => directory,
   }
-  file {'/opt/minecraft/server.jar'
+  file {"${install}/server.jar"
     ensure => file,
-    source => 'https://s3.amazonaws.com/Mincraft.Download/versions/1.12.2/minecraft_server.1.12.2.jar',
+    source => $url,
     before => Server['minecraft'],
   }
   package {'java':
     ensure => present,
   }
-  file {'/opt/minecraft/eula.txt':
+  file {"${install}/eula.txt":
     ensure => file,
     content => 'eula=true',
   }
@@ -22,6 +24,6 @@ class minecraft {
   service {'minecraft':
     ensure => running,
     ensure => true,
-    require => [Package['java'],File['/opt/minecraft/eula.txt'],File['/etc/systemd/system/minecraft.service']],
+    require => [Package['java'],File["${install}/eula.txt"],File['/etc/systemd/system/minecraft.service']],
   }
 }
